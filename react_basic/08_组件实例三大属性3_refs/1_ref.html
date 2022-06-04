@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串形式的ref</title>
+</head>
+<body>
+    <div id="container"></div>
+    
+    <!-- 引入react核心库 -->
+    <script src="/js/react.production.min.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script src="/js/react-dom.production.min.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script src="/js/babel.min.js"></script>
+
+    <script type="text/babel">
+        // 创建组件
+        class Demo extends React.Component{
+
+            showData = ()=>{
+                console.log('@');
+
+                // js写法
+                const input = document.getElementById("input1")
+                console.log(input.value);
+
+
+                // react写法
+                console.log(this, this.refs.input01);
+                const input01 = this.refs.input01;
+                console.log(input01.value);
+            }
+
+            showData2 = ()=>{
+                const input2 = this.refs.input2;
+                console.log(input2.value);
+            }
+            
+            render(){
+
+
+                return (
+                    <div>
+                        <input id="input1" type="text" ref="input01" placeholder="点击按钮提示数据" />
+                        <button ref="button00" onClick={this.showData}>点我提示左侧数据</button>
+
+                        <input onBlur={this.showData2} ref="input2" type="text" placeholder="失去焦点提示数据" />
+                    </div>
+                )
+            }
+        }
+
+        // 渲染组件到页面
+        ReactDOM.render(<Demo/>, document.getElementById('container'))
+    </script>
+</body>
+</html>

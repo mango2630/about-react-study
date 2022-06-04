@@ -1,0 +1,5 @@
+.title{
+    /* 后引入的样式污染全局 */
+    width: 200px;
+    background-color: orchid;
+}

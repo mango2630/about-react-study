@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>生命周期</title>
+</head>
+<body>
+    <div id="container"></div>
+    
+    <!-- 引入react核心库 -->
+    <script src="/js/react.production.min.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script src="/js/react-dom.production.min.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script src="/js/babel.min.js"></script>
+    
+    <script type="text/babel">
+        // 生命周期回调函数 , 生命周期钩子函数, 生命周期
+        // 创建组件
+        class Life extends React.Component{
+
+            /* 
+                挂载 mount 
+                卸载 unmount
+            */
+            state = {opacity : 1}
+
+            waysko = ()=>{
+                // 清除定时器
+                // clearInterval(this.timer)
+
+                // 卸载组件
+                ReactDOM.unmountComponentAtNode(document.getElementById('container'))
+            }
+
+            // 组件挂在完毕
+            componentDidMount(){
+                // 定时器一直开着，没有关，在卸载组件之前，需要清空定时器
+                this.timer = setInterval(() => {
+                    // 获取原状态
+                    let {opacity} = this.state;
+                    // 减少0.1
+                    opacity -= 0.1;
+                    if(opacity <= 0) opacity = 1;
+                    // 设置新的透明度
+                    this.setState({opacity})
+                }, 200)
+            }
+
+            // 组件将要卸载
+            componentWillUnmount (){
+                // 清除定时器
+                clearInterval(this.timer)
+            }
+
+            // render调用时机：初始化渲染，状态更新后
+            render () {
+                console.log(this);
+                return (
+                    <div>
+                        <h2 style={{opacity:this.state.opacity}}>React加油</h2>
+                        <button onClick={this.waysko}>干掉它</button>
+                    </div>
+                )
+            }
+        }
+
+        // 渲染组件
+        ReactDOM.render(<Life/>, document.getElementById('container'))
+    </script>
+</body>
+</html>

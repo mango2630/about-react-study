@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="test"></div>
+    <div id="person1"></div>
+    <div id="person2"></div>
+    <!--  
+        从组件外部获取数据
+    -->
+
+    <!-- 引入react核心库 -->
+    <script src="/js/react.production.min.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script src="/js/react-dom.production.min.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script src="/js/babel.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prop-types/15.6.0/prop-types.js"></script>
+
+    <script type="text/babel">
+        class Person extends React.Component{
+
+            render() {
+                console.log(this);
+                const {user} = this.props;
+                return (
+                    <div>
+                    {
+                    user.map((item, index) => {
+                        return (
+                        <ul>
+                            <li>姓名{item.name}</li>
+                            <li>年龄{item.age}</li>
+                            <li>性别{item.sex}</li>
+                        </ul>
+                        )
+                    })
+                    }    
+                    </div>
+                )
+            }
+        }   
+
+
+        const user = [
+            {
+                "name": '',
+                "age": 12,
+                "sex": "男"
+            },
+            {
+                "name": "Denny",
+                "age": 19,
+                "sex": "男"
+            }
+        ]
+        ReactDOM.render(<Person user={user}/>, document.getElementById("test"));
+    </script>
+</body>
+</html>

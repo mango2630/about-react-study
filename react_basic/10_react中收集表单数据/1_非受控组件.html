@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+</head>
+<body>
+    <div id="container"></div>
+    
+    <!-- 引入react核心库 -->
+    <script src="/js/react.production.min.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script src="/js/react-dom.production.min.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script src="/js/babel.min.js"></script>
+
+    <script type="text/babel">
+        // 创建组件
+        class Login extends React.Component{
+            username = React.createRef();
+            password = React.createRef();
+
+            showInfo = (event)=>{
+                // 组织表单的提交
+                // 组织浏览器默认事件
+                event.preventDefault();
+
+                const {username, password} = this;
+                alert(`你输入的的用户名是${username.current.value},你输入的密码是${password.value} `)
+                
+            }
+            
+            render (){
+                return (
+                    <form action="http://www.atguigu.com" onSubmit={this.showInfo}>
+                        用户名：<input 
+                                ref={this.username} 
+                                type="text" 
+                                name="username" />  
+                        <br/>
+                        密码：<input 
+                                ref={c=>this.password=c}  
+                                type="password" 
+                                name="password" />
+                        <br/>
+                        <button>登录</button>
+                    </form>
+                )
+            }
+        }
+
+        // 渲染组件
+        ReactDOM.render(<Login/>, document.getElementById('container'))
+    </script>
+</body>
+</html>

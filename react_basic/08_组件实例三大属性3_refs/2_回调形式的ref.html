@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>字符串形式的ref</title>
+</head>
+<body>
+    <div id="container"></div>
+    
+    <!-- 引入react核心库 -->
+    <script src="/js/react.production.min.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script src="/js/react-dom.production.min.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script src="/js/babel.min.js"></script>
+
+    <script type="text/babel">
+
+        /* 
+            回调形式的：
+                1. 你定义的
+                2. 你没调用 （匿名函数）
+                3. 别人调用的
+        */
+
+
+        // 创建组件
+        class Demo extends React.Component{
+
+            showData = ()=>{
+                const {input1} = this;
+                alert(input1.value)
+            }
+
+            showDta2 = ()=>{
+                const {input2} = this;
+                alert(input2.value);
+            }
+
+            render(){
+                return (
+                    <div>
+                        <input 
+                            ref={()=>{console.log('@@@@@');}} type="text" 
+                            placeholder="点test" />
+                        <input 
+                            ref={(c)=>{console.log(c);}} 
+                            type="text" 
+                            placeholder="点testdddd" />
+                        
+                        {/* this 实力自身绑定 */}
+                        <input 
+                            ref={(c)=>{this.input1 = c}} 
+                            type="text" 
+                            placeholder="点击按钮提示数据" />
+
+                        <button 
+                            ref="button123" 
+                            onClick={this.showData}>点我提示数据</button>
+
+                        <input 
+                            ref={c => this.input2 = c} 
+                            type="text" 
+                            onBlur={this.showDta2} 
+                            placeholder="失去焦点提示数据" />
+                    </div>
+                )
+            }
+        }
+
+        // 渲染组件到页面
+        ReactDOM.render(<Demo/>, document.getElementById('container'))
+    </script>
+</body>
+</html>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>事件处理</title>
+</head>
+<body>
+    <div id="container"></div>
+    
+    <!-- 引入react核心库 -->
+    <script src="/js/react.production.min.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script src="/js/react-dom.production.min.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script src="/js/babel.min.js"></script>
+
+    <script type="text/babel">
+        // 创建组件
+        class Demo extends React.Component{
+            // 创建ref容器
+            myRef = React.createRef();
+            myRef1 = React.createRef();
+
+            // 展示左侧输入框的数据
+            showData = ()=>{
+                alert(this.myRef.current.value);
+                console.log(this.myRef.current);
+            }
+
+            // 展示右侧输入框的数据
+            showData2 = (event)=>{
+                console.log(event.target);
+                alert(event.target.value);
+            }
+
+            render(){
+            
+                return (
+                    <div>
+                        <input ref={this.myRef} type="text" placeholder="点击按钮提示数据" />        
+                        <button ref="button123" onClick={this.showData}>点我提示数据</button>  
+
+                        {/* 不要过度使用refs */}
+                        <input onBlur={this.showData2} type="text" placeholder="点击按钮提示数据" />    
+                    </div>
+                )
+            }
+        }
+        // 渲染组件到页面
+        ReactDOM.render(<Demo/>, document.getElementById('container'))
+    </script>
+</body>
+</html>

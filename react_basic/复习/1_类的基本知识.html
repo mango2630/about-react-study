@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <script type=text/javascript>
+
+        /* 
+            1. 类中的构造器不是必须写的，要对实例进行一些初始化的操作时才写
+            2. ...
+        */
+        // 创建一个Person类
+        class Person {
+            // 构造器方法
+            constructor(name, age){
+                // 构造器中的this是指——类的实例对象
+                this.name = name;
+                this.age = age;
+            }
+            // 一般方法
+            speak(){
+                // 放在了类的原型对象上 _proto_
+                // 通过person实例调用speak时，speak中的this就是person实例
+                console.log(`我叫${this.name},我年龄是${this.age}`);
+            }
+        }
+
+        // 创建一个Person实例对象
+        const p1 = new Person();
+        
+        // 继承
+        class Students extends Person{
+            constructor(name, age, grade){
+                /* super();
+                this.name = name;
+                this.age = age; */
+
+                super(name, age);
+                this.grade = grade;
+            }
+        }
+        const s1 = new Students("校长", 22, '高三');
+        console.log(s1);
+
+
+        class Car {
+            constructor (name, price){
+                this.name = name;
+                this.price = price;
+            }
+            // 类中可以直接写赋值语句，如下代码含义是：给Car 的实例对象添加一个属性，名为wheel, 值为4
+            wheel = 4;
+        }
+        const c1 = new Car('奔驰', 199);
+        const c2 = new Car('宝马', 199);
+        console.log(c1);
+        console.log(c2);
+    </script>
+</body>
+</html>

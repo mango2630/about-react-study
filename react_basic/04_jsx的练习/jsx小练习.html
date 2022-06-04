@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <!-- 引入react核心库 -->
+    <script src="/js/react.production.min.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script src="/js/react-dom.production.min.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script src="/js/babel.min.js"></script>
+
+
+    <script type="text/babel">
+
+        /*  
+            一定注意区分：js语句（代码）与js表达式
+                1. 表达式：一个表达式会产生一个值，可以放在任何一个需要值的地方
+            map:通过指定函数处理数组的每个元素，并返回处理后的数组。
+            arr.map()返回一个新数组
+         */
+        // 模拟一些数据
+        const data = ['Angular', 'Vue', 'React'];
+        let res = data.map((item, index) => {
+                    return <li>{item}</li>
+                })
+
+        const VDOM = (
+            <div id="container">
+                <h2>展示前端框架</h2>
+                <ul> { res } </ul>
+            </div>
+        )
+            
+        ReactDOM.render(VDOM, document.getElementById('root'));
+    </script>
+</body>
+</html>

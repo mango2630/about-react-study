@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        .list{
+            width: 200px;
+            height: 150px;
+            background-color: orange;
+            overflow: auto;
+        }
+        .news{
+            height: 30px;
+        }
+    </style>
+</head>
+<body>
+    
+    <div id="root"></div>
+    
+    <!-- 引入react核心库 -->
+    <script src="../js/react.development.js"></script>
+    <!-- 引入react-dom 用于支持react操作DOM -->
+    <script src="../js/react-dom.development.js"></script>
+    <!-- 引入babel 用于将jsx转为js -->
+    <script src="/js/babel.min.js"></script>
+
+    <!-- 模拟朋友圈 -->
+    <script type="text/babel">
+        // const list = document.getElementsByClassName('list')[0];
+        // list.scrollTop：设置滚动条的距离顶部的距离
+        // list.scrollHeight: 滚动条内包含的内容区高度
+
+        class NewsList extends React.Component{
+
+            state = { newsArr : [] }
+            
+            // 生成新闻
+            componentDidMount(){
+                setInterval(()=>{
+                    const {newsArr} = this.state;
+
+                    const news = '新闻' + (newsArr.length);
+
+                    this.setState({
+                        newsArr: [news, ...newsArr]
+                    })
+                }, 1000)
+            }
+
+            getSnapshotBeforeUpdate(){
+                // console.log(this.refs.list.scrollHeight);
+                return this.refs.list.scrollHeight
+            }
+
+            // 每次更新后
+            componentDidUpdate(preProps, preState, height){
+                // console.log(this.refs.list.scrollTop);
+                this.refs.list.scrollTop += this.refs.list.scrollHeight - height
+            }
+
+            render(){
+                return (
+                    <div className="list" ref="list">
+                    {
+                        this.state.newsArr.map((item, index)=>{
+                            return <div className="news" key={index}>{item}</div>
+                        })
+                    }
+                    </div>
+                )
+            }
+        }
+
+        ReactDOM.render(<NewsList/>, document.getElementById('root'))
+    </script>
+</body>
+</html>
